@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ranking oficial do Clube do Ódio — disciplina, cobrança e execução.">
+  <title>Ranking — Clube do Ódio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <div class="page-wrapper">
+
+    <header class="header">
+      <img src="logo.png" alt="Clube do Ódio" class="logo" id="logo">
+      <p class="brand-label">CLUBE DO ÓDIO</p>
+      <h1 class="page-title">RANKING</h1>
+      <p class="update-label" id="updateLabel">Carregando dados...</p>
+    </header>
+
+    <section class="podium-section" id="podiumSection" hidden>
+      <div class="podium" id="podium"></div>
+    </section>
+
+    <section class="table-section">
+      <div class="table-header">
+        <span class="table-title">CLASSIFICAÇÃO GERAL</span>
+        <span class="table-count" id="tableCount"></span>
+      </div>
+
+      <div class="table-wrapper">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th class="col-pos">#</th>
+              <th class="col-nome">Nome</th>
+              <th class="col-resp">Respostas</th>
+              <th class="col-pts">Pontos</th>
+              <th class="col-med">Média</th>
+            </tr>
+          </thead>
+          <tbody id="rankingBody">
+            <tr>
+              <td colspan="5" class="state-loading" id="loadingMsg">Carregando...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Disciplina. Cobrança. Execução.</p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

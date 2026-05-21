@@ -1,0 +1,406 @@
+/* ============================================================
+   CLUBE DO ÓDIO — Ranking Público
+   Estética: dark / industrial / premium
+   ============================================================ */
+
+:root {
+  --bg:          #0a0a0a;
+  --surface:     #111111;
+  --surface-2:   #171717;
+  --border:      #1e1e1e;
+  --border-2:    #2a2a2a;
+  --text:        #e0e0e0;
+  --text-muted:  #555555;
+  --text-dim:    #333333;
+  --red:         #c0392b;
+  --red-glow:    rgba(192, 57, 43, 0.15);
+  --gold:        #c9a84c;
+  --gold-bg:     rgba(201, 168, 76, 0.08);
+  --silver:      #9e9e9e;
+  --silver-bg:   rgba(158, 158, 158, 0.06);
+  --bronze:      #b87333;
+  --bronze-bg:   rgba(184, 115, 51, 0.06);
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Faixa vermelha topo ---- */
+.top-bar {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+/* ---- Layout ---- */
+.page-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header {
+  text-align: center;
+  padding: 52px 0 36px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+
+.logo {
+  height: 56px;
+  width: auto;
+  margin-bottom: 16px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo[src="logo.png"]:not([complete]),
+.logo.hidden { display: none; }
+
+.brand-label {
+  font-size: 10px;
+  letter-spacing: 5px;
+  font-weight: 700;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.page-title {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 14px;
+  line-height: 1;
+}
+
+.update-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ============================================================
+   PÓDIO — Top 3
+   ============================================================ */
+.podium-section {
+  margin-bottom: 40px;
+}
+
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.podium-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 22px 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.podium-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.podium-card.pos-1 { background: var(--gold-bg); border-color: rgba(201, 168, 76, 0.2); }
+.podium-card.pos-2 { background: var(--silver-bg); border-color: rgba(158, 158, 158, 0.15); }
+.podium-card.pos-3 { background: var(--bronze-bg); border-color: rgba(184, 115, 51, 0.15); }
+
+.podium-card.pos-1::after { background: var(--gold); }
+.podium-card.pos-2::after { background: var(--silver); }
+.podium-card.pos-3::after { background: var(--bronze); }
+
+.podium-rank {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.pos-1 .podium-rank { color: var(--gold); }
+.pos-2 .podium-rank { color: var(--silver); }
+.pos-3 .podium-rank { color: var(--bronze); }
+
+.podium-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 14px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.podium-pts {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.pos-1 .podium-pts { color: var(--gold); }
+.pos-2 .podium-pts { color: var(--silver); }
+.pos-3 .podium-pts { color: var(--bronze); }
+
+.podium-pts-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+/* ============================================================
+   TABELA
+   ============================================================ */
+.table-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.table-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.table-count {
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Cabeçalho da tabela */
+.ranking-table thead th {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.col-pos  { width: 56px; text-align: center !important; }
+.col-nome { text-align: left; }
+.col-resp,
+.col-pts,
+.col-med  { text-align: right; }
+
+.ranking-table thead .col-pos,
+.ranking-table thead .col-resp,
+.ranking-table thead .col-pts,
+.ranking-table thead .col-med { text-align: right; }
+.ranking-table thead .col-pos { text-align: center; }
+
+/* Linhas */
+.ranking-table tbody tr {
+  border-bottom: 1px solid #131313;
+  transition: background 0.12s;
+}
+
+.ranking-table tbody tr:last-child { border-bottom: none; }
+.ranking-table tbody tr:hover { background: var(--surface-2); }
+
+.ranking-table tbody tr.row-top1 { background: var(--gold-bg); }
+.ranking-table tbody tr.row-top2 { background: var(--silver-bg); }
+.ranking-table tbody tr.row-top3 { background: var(--bronze-bg); }
+
+.ranking-table tbody tr.row-top1:hover { background: rgba(201, 168, 76, 0.12); }
+.ranking-table tbody tr.row-top2:hover { background: rgba(158, 158, 158, 0.10); }
+.ranking-table tbody tr.row-top3:hover { background: rgba(184, 115, 51, 0.10); }
+
+.ranking-table tbody td {
+  padding: 13px 16px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.ranking-table tbody .col-pos { text-align: center; }
+.ranking-table tbody .col-resp,
+.ranking-table tbody .col-pts,
+.ranking-table tbody .col-med { text-align: right; }
+
+/* Badge de posição */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-gold   { background: rgba(201, 168, 76, 0.14); color: var(--gold); }
+.badge-silver { background: rgba(158, 158, 158, 0.12); color: var(--silver); }
+.badge-bronze { background: rgba(184, 115, 51, 0.12); color: var(--bronze); }
+.badge-normal { color: var(--text-muted); background: none; font-size: 13px; }
+
+/* Valores de pontuação */
+.pts-val {
+  font-weight: 700;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-top1 .pts-val { color: var(--gold); }
+.row-top2 .pts-val { color: var(--silver); }
+.row-top3 .pts-val { color: var(--bronze); }
+
+.med-val {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Nome */
+.nome-cell { font-weight: 500; }
+
+/* ---- Estados ---- */
+.state-loading,
+.state-error {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.state-error { color: var(--red); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  text-align: center;
+  padding: 36px 0 0;
+  margin-top: 40px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   RESPONSIVO — MOBILE
+   ============================================================ */
+@media (max-width: 600px) {
+
+  .page-wrapper { padding: 0 14px 48px; }
+
+  .header { padding: 36px 0 28px; }
+
+  .page-title {
+    font-size: 28px;
+    letter-spacing: 6px;
+  }
+
+  /* Pódio em coluna no mobile */
+  .podium {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .podium-card {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    padding: 14px 16px;
+  }
+
+  .podium-card::after {
+    width: 2px;
+    height: 100%;
+    top: 0; left: 0; right: auto;
+    border-radius: 0;
+  }
+
+  .podium-rank  { margin-bottom: 0; font-size: 9px; }
+  .podium-name  { margin-bottom: 0; min-height: auto; font-size: 12px; justify-content: flex-start; }
+  .podium-pts   { font-size: 24px; }
+  .podium-pts-label { display: none; }
+
+  /* Tabela: esconde coluna Respostas no mobile */
+  .col-resp,
+  .ranking-table tbody .col-resp { display: none; }
+
+  .ranking-table tbody td { padding: 11px 12px; font-size: 13px; }
+  .ranking-table thead th { padding: 10px 12px; }
+
+  .badge { width: 26px; height: 26px; font-size: 11px; }
+  .pts-val { font-size: 14px; }
+}
