@@ -822,60 +822,6 @@ function animateSectionIn(selector, delay) {
 }
 
 /* ============================================================
-   ESTADO VAZIO SEGURO — planilha sem registros ou erro de fetch
-   Zera rankingData, limpa todas as seções dependentes de dados
-   e exibe mensagem apropriada na tabela.
-   ============================================================ */
-function renderEmptySeasonState(message) {
-  // 1. Zera o estado em memória — modal não abrirá dados antigos
-  rankingData      = [];
-  rankingMediaGeral = 0;
-
-  // 2. Esconde seções que dependem de dados válidos
-  const podiumSection    = document.getElementById('podiumSection');
-  const destaquesSection = document.getElementById('destaquesSection');
-  const hofSection       = document.getElementById('hofSection');
-
-  if (podiumSection)    podiumSection.hidden    = true;
-  if (destaquesSection) destaquesSection.hidden = true;
-  if (hofSection)       hofSection.hidden       = true;
-
-  // 3. Limpa os innerHTML para não vazar conteúdo antigo
-  const podiumEl = document.getElementById('podium');
-  const hofGrid  = document.getElementById('hofGrid');
-  if (podiumEl) podiumEl.innerHTML = '';
-  if (hofGrid)  hofGrid.innerHTML  = '';
-
-  // 4. Atualiza contagem e corpo da tabela
-  const count = document.getElementById('tableCount');
-  if (count) count.textContent = '0 membros';
-
-  const tbody = document.getElementById('rankingBody');
-  if (tbody) {
-    const msg = message || 'A tropa ainda não pontuou nesta temporada.';
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="5" class="state-empty">
-          <p>${msg}</p>
-          <p>Os primeiros registros válidos abrirão o ranking.</p>
-        </td>
-      </tr>
-    `;
-  }
-
-  // 5. Zera stats — sem animação, sem dados fantasma
-  const statMembros   = document.getElementById('statMembros');
-  const statRespostas = document.getElementById('statRespostas');
-  const statMedia     = document.getElementById('statMedia');
-  const statLider     = document.getElementById('statLider');
-
-  if (statMembros)   statMembros.textContent   = '0';
-  if (statRespostas) statRespostas.textContent = '0';
-  if (statMedia)     statMedia.textContent     = '—';
-  if (statLider)     statLider.textContent     = '—';
-}
-
-/* ============================================================
    LOAD — busca e renderiza dados
    ============================================================ */
 async function loadRanking() {
@@ -901,15 +847,7 @@ async function loadRanking() {
     const text = await res.text();
     const data = parseCSV(text);
 
-    if (data.length === 0) {
-      renderEmptySeasonState();
-      updateTimestamp();
-      if (rankingFirstLoad) {
-        document.querySelectorAll('.section-init').forEach(el => el.classList.remove('section-init'));
-        rankingFirstLoad = false;
-      }
-      return;
-    }
+    if (data.length === 0) throw new Error('Sem dados');
 
     rankingData = data;
 
@@ -937,12 +875,17 @@ async function loadRanking() {
     rankingFirstLoad = false;
 
   } catch (err) {
-    // Em caso de erro, revela seções e exibe estado vazio seguro
+    // Em caso de erro, revela seções para não ficarem ocultas indefinidamente
     if (rankingFirstLoad) {
       document.querySelectorAll('.section-init').forEach(el => el.classList.remove('section-init'));
-      rankingFirstLoad = false;
     }
-    renderEmptySeasonState('Não foi possível carregar o ranking agora.');
+    document.getElementById('rankingBody').innerHTML = `
+      <tr>
+        <td colspan="5" class="state-error">
+          Não foi possível carregar o ranking. Tente recarregar a página.
+        </td>
+      </tr>
+    `;
     document.getElementById('updateLabel').textContent = 'Erro ao atualizar';
     console.error('[Ranking] Erro:', err.message);
   }
